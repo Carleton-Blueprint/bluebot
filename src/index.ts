@@ -49,18 +49,6 @@ const app = (probotApp: Probot) => {
     actor.start();
     actor.send({ type: 'New Project', probotContext: context });
 
-    // // parse general information
-    // const owner = context.payload.repository.owner.login;
-    // const repo = context.payload.repository.name;
-
-    // // parse payload from newly created issue (GitHub issue yaml form)
-    // const fields = context.payload.issue.body?.split('\n\n');
-    // if (!fields) return;
-    // const organization = fields[1];
-    // const author = fields[3];
-    // const organizationTag = fields[5];
-    // logger.debug('fields', fields);
-
     // // create milestone for the project
     // const milestone = await context.octokit.issues.createMilestone({
     //   owner: context.payload.repository.owner.login,
