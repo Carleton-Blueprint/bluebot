@@ -54,7 +54,7 @@ const machineWithImpl = machineSetup.createMachine({
               guard: 'issueLabelGuard',
               target: 'ParseIssueInformation',
             },
-            { target: 'End' },
+            { target: '#end' },
           ],
           // invoke: {
           //   src: 'checkIssueLabelActor',
@@ -68,6 +68,7 @@ const machineWithImpl = machineSetup.createMachine({
       },
     },
     End: {
+      id: 'end',
       type: 'final',
       entry: { type: 'concludeAction' },
     },

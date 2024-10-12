@@ -49,48 +49,48 @@ const app = (probotApp: Probot) => {
     actor.start();
     actor.send({ type: 'New Project', probotContext: context });
 
-    // parse general information
-    const owner = context.payload.repository.owner.login;
-    const repo = context.payload.repository.name;
+    // // parse general information
+    // const owner = context.payload.repository.owner.login;
+    // const repo = context.payload.repository.name;
 
-    // parse payload from newly created issue (GitHub issue yaml form)
-    const fields = context.payload.issue.body?.split('\n\n');
-    if (!fields) return;
-    const organization = fields[1];
-    const author = fields[3];
-    const organizationTag = fields[5];
-    logger.debug('fields', fields);
+    // // parse payload from newly created issue (GitHub issue yaml form)
+    // const fields = context.payload.issue.body?.split('\n\n');
+    // if (!fields) return;
+    // const organization = fields[1];
+    // const author = fields[3];
+    // const organizationTag = fields[5];
+    // logger.debug('fields', fields);
 
-    // create milestone for the project
-    const milestone = await context.octokit.issues.createMilestone({
-      owner: context.payload.repository.owner.login,
-      repo: context.payload.repository.name,
-      title: `📍 [project] ${organization}`,
-    });
-    logger.info(`Created milestone: ${milestone.data.title}`);
+    // // create milestone for the project
+    // const milestone = await context.octokit.issues.createMilestone({
+    //   owner: context.payload.repository.owner.login,
+    //   repo: context.payload.repository.name,
+    //   title: `📍 [project] ${organization}`,
+    // });
+    // logger.info(`Created milestone: ${milestone.data.title}`);
 
-    // construct body for the Stage 1 issue
-    const rawTemplate = fs.readFileSync('./src/stages/1-outreach/0-task.md', 'utf8');
-    const template = _.template(rawTemplate);
-    const data = { organization, author, organizationTag };
+    // // construct body for the Stage 1 issue
+    // const rawTemplate = fs.readFileSync('./src/stages/1-outreach/0-task.md', 'utf8');
+    // const template = _.template(rawTemplate);
+    // const data = { organization, author, organizationTag };
 
-    // create Stage 1 issue with milestone (using Workflows, this issue is automatically added to the project - https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/adding-items-automatically)
-    const issue_stage0 = await context.octokit.issues.create({
-      owner,
-      repo,
-      title: `[project] ${organizationTag}: Stage 1 - Outreach`,
-      body: template(data),
-      milestone: milestone.data.number,
-    });
-    logger.info(`Created issue: ${issue_stage0.data.title}`);
+    // // create Stage 1 issue with milestone (using Workflows, this issue is automatically added to the project - https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/adding-items-automatically)
+    // const issue_stage0 = await context.octokit.issues.create({
+    //   owner,
+    //   repo,
+    //   title: `[project] ${organizationTag}: Stage 1 - Outreach`,
+    //   body: template(data),
+    //   milestone: milestone.data.number,
+    // });
+    // logger.info(`Created issue: ${issue_stage0.data.title}`);
 
-    // add comment to original issue to highlight next steps
-    await context.octokit.issues.createComment({
-      owner,
-      repo,
-      issue_number: receivedIssue.number,
-      body: 'hi',
-    });
+    // // add comment to original issue to highlight next steps
+    // await context.octokit.issues.createComment({
+    //   owner,
+    //   repo,
+    //   issue_number: receivedIssue.number,
+    //   body: 'hi',
+    // });
   });
   // For more information on building apps:
   // https://probot.github.io/docs/
