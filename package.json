@@ -11,8 +11,7 @@
     "format:fix": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,md}'",
     "dev": "nodemon --watch 'src/**/*' --exec 'ts-node' src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js",
-    "prepare": "husky"
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +19,6 @@
   "description": "",
   "devDependencies": {
     "@types/lodash": "^4.17.10",
-    "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
     "nodemon": "^3.1.7",
     "prettier": "^3.3.3",
