@@ -7,9 +7,12 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --check '**/*.{js,jsx,ts,tsx,json,css,md}'",
+    "format:fix": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,md}'",
     "dev": "nodemon --watch 'src/**/*' --exec 'ts-node' src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +20,10 @@
   "description": "",
   "devDependencies": {
     "@types/lodash": "^4.17.10",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
     "nodemon": "^3.1.7",
+    "prettier": "^3.3.3",
     "smee-client": "^2.0.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"

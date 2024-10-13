@@ -25,7 +25,7 @@ const machineSetup = setup({
       logger.info(
         `Checking issue label of '${probotContext.payload.issue.title}'... ${
           isLabelCorrect ? '✅ LABEL MATCHES' : '❌ LABEL DOES NOT MATCH'
-        }`
+        }`,
       );
       return isLabelCorrect;
     },
@@ -89,7 +89,10 @@ const machineWithImpl = machineSetup.createMachine({
           invoke: {
             src: 'createMilestoneActor',
             input: ({ context }) => ({ context }),
-            onDone: { actions: assign(({ event }) => ({ ...event.output })), target: 'Create Next Issue' },
+            onDone: {
+              actions: assign(({ event }) => ({ ...event.output })),
+              target: 'Create Next Issue',
+            },
             // onError: { target: '#errorEnd' },
           },
         },
@@ -97,7 +100,10 @@ const machineWithImpl = machineSetup.createMachine({
           invoke: {
             src: 'createNextIssueActor',
             input: ({ context }) => ({ context }),
-            onDone: { actions: assign(({ event }) => ({ ...event.output })), target: 'Comment Summary' },
+            onDone: {
+              actions: assign(({ event }) => ({ ...event.output })),
+              target: 'Comment Summary',
+            },
             // onError: { target: '#errorEnd' },
           },
         },
@@ -119,7 +125,10 @@ const machineWithImpl = machineSetup.createMachine({
     ErrorEnd: {
       id: 'errorEnd',
       type: 'final',
-      entry: { type: 'errorAction', params: ({ context }) => ({ logger: context.logger }) },
+      entry: {
+        type: 'errorAction',
+        params: ({ context }) => ({ logger: context.logger }),
+      },
     },
   },
 });

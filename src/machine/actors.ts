@@ -22,7 +22,7 @@ export const parseGeneralInfoActor = fromPromise(
     logger.debug('fields', fields);
 
     return { owner, repo, client, author, clientTag };
-  }
+  },
 );
 
 export const createMilestoneActor = fromPromise(
@@ -39,7 +39,7 @@ export const createMilestoneActor = fromPromise(
     logger.info(`Created milestone: ${milestone.title}`);
 
     return { milestone };
-  }
+  },
 );
 
 export const createNextIssueActor = fromPromise(
@@ -88,7 +88,7 @@ export const createNextIssueActor = fromPromise(
     logger.info(`Created issue: ${nextIssue.title}`);
 
     return { nextIssue };
-  }
+  },
 );
 
 export const commentSummaryActor = fromPromise(
@@ -131,5 +131,5 @@ export const commentSummaryActor = fromPromise(
       issue_number: probotContext.payload.issue.number,
       body: template(data),
     });
-  }
+  },
 );
