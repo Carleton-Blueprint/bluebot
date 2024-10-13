@@ -1,16 +1,12 @@
 import { Probot, run } from 'probot';
-import fs from 'fs';
-import _ from 'lodash';
 import winston from 'winston';
 
 import { createActor } from 'xstate';
 import machine from './machine';
 
-const ACTIVATION_LABEL_ID = 7587773718;
-
 /* Logger Configuration */
 const logger = winston.createLogger({
-  level: 'info',
+  level: 'debug',
   format: winston.format.json(),
   defaultMeta: { service: 'user-service' },
   transports: [
@@ -18,12 +14,12 @@ const logger = winston.createLogger({
     // - Write all logs with importance level of `error` or higher to `error.log`
     //   (i.e., error, fatal, but not other levels)
     //
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    // new winston.transports.File({ filename: 'error.log', level: 'error' }),
     //
     // - Write all logs with importance level of `info` or higher to `combined.log`
     //   (i.e., fatal, error, warn, and info, but not trace)
     //
-    new winston.transports.File({ filename: 'combined.log' }),
+    // new winston.transports.File({ filename: 'combined.log' }),
   ],
 });
 
@@ -42,35 +38,9 @@ if (process.env.NODE_ENV !== 'production') {
 /* Main App */
 const app = (probotApp: Probot) => {
   probotApp.on('issues.opened', async context => {
-    const actor = createActor(machine, { input: { logger } });
-
-    // actor.subscribe(snapshot => { console.log(snapshot.status); });
-
+    const actor = createActor(machine, { input: { probotContext: context, logger } });
     actor.start();
     actor.send({ type: 'New Project', probotContext: context });
-
-    // // create milestone for the project
-    // const milestone = await context.octokit.issues.createMilestone({
-    //   owner: context.payload.repository.owner.login,
-    //   repo: context.payload.repository.name,
-    //   title: `📍 [project] ${organization}`,
-    // });
-    // logger.info(`Created milestone: ${milestone.data.title}`);
-
-    // // construct body for the Stage 1 issue
-    // const rawTemplate = fs.readFileSync('./src/stages/1-outreach/0-task.md', 'utf8');
-    // const template = _.template(rawTemplate);
-    // const data = { organization, author, organizationTag };
-
-    // // create Stage 1 issue with milestone (using Workflows, this issue is automatically added to the project - https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/adding-items-automatically)
-    // const issue_stage0 = await context.octokit.issues.create({
-    //   owner,
-    //   repo,
-    //   title: `[project] ${organizationTag}: Stage 1 - Outreach`,
-    //   body: template(data),
-    //   milestone: milestone.data.number,
-    // });
-    // logger.info(`Created issue: ${issue_stage0.data.title}`);
 
     // // add comment to original issue to highlight next steps
     // await context.octokit.issues.createComment({
