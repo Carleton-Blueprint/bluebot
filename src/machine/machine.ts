@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { setup, assign } from 'xstate';
 import { Logger } from 'winston';
 
@@ -13,7 +12,7 @@ const machineSetup = setup({
     input: {} as { probotContext: IssuesContext; logger: Logger },
   },
   actions: {
-    concludeAction: (_, params: { context: MachineContext }) => params.context.logger.info('Project setup completed.'),
+    concludeAction: (_, params: { logger: Logger }) => params.logger.info('Project setup completed.'),
     errorAction: (_, params: { logger: Logger }) => params.logger.error('An error occurred.'),
   },
   guards: {
@@ -120,7 +119,7 @@ const machineWithImpl = machineSetup.createMachine({
     End: {
       id: 'end',
       type: 'final',
-      entry: { type: 'concludeAction', params: ({ context }) => ({ context }) },
+      entry: { type: 'concludeAction', params: ({ context }) => ({ logger: context.logger }) },
     },
     ErrorEnd: {
       id: 'errorEnd',

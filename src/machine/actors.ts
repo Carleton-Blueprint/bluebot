@@ -2,7 +2,7 @@ import { fromPromise } from 'xstate';
 import fs from 'fs/promises';
 import _ from 'lodash';
 import { MachineContext } from './types';
-import { MAX_STAGE, PROJECT_URL } from '../constants';
+import { MAX_STAGE } from '../constants';
 import { getDirs, getProjectUrl } from './utils';
 
 export const parseGeneralInfoActor = fromPromise(
