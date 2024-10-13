@@ -4,7 +4,7 @@ import { Logger } from 'winston';
 
 import { ACTIVATION_LABEL_ID } from '../constants';
 import { IssuesContext, MachineContext, MachineEvent } from './types';
-import { createMilestoneActor, createNextIssueActor, parseGeneralInfoActor } from './actors';
+import { commentSummaryActor, createMilestoneActor, createNextIssueActor, parseGeneralInfoActor } from './actors';
 
 const machineSetup = setup({
   types: {
@@ -34,11 +34,12 @@ const machineSetup = setup({
     parseGeneralInfoActor,
     createMilestoneActor,
     createNextIssueActor,
+    commentSummaryActor,
   },
 });
 
 const machineWithImpl = machineSetup.createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOgCUx0IBPAYgDkwB3AAgAUAnAewCsxMALgG0ADAF1EoAA5dYuAbi75JIAB6IATAGYAbCQDsATgCMOgKxnjIjQA59prQBoQ1RKb0aNOgCw791n30bLQBfEOc0LDxCUgBJfHlcdAAbXAAvdAUlEgBhbH4AaxZY2FgAVzAWABl0ACMwZNpRCSQQGTks5Vb1BA19DRJgrWHh2y1DCzNnVwQzPxINQ28NY36dLRERbxswiIwcAmISeMSU9MzFfFz8zCKS8sqa+sahYxbpWUSlFR7VpZItstrGZ9DoNGYnC5EP5DCQluMdCIJvpvCJQbsQJEDjFjgkFGcMp0SGx0BxYJV7hVivgAGZcDgYTq0CBKMAkAgANy4BTZWOiRxO+NShMuxNJ5OKpSp8TpDIuSgQnK4mHl+GazRU7S+XVAPRRA3MVm03i0NmMxhsUyhsxNgw25m82zsIlWGL5hzieKSwtVuQ4lAElQAsrhknABKzmaz2fguTySO6cYLveciTl-Zlg6Hw6zFbHlar1eJNZ9Oj83OCtCRVn8zCIEWDjNNEGZbcERDolr5vPotGZDG79vzPacfWmM4GWIxVAJJQ8o4QY3HeUOPbjR6nRemA5Vp7PKWA81yVZ0i+82qXLuWEH9vADHRpgaDK83Zjo9BZH74zeb9BCwuEID4FwEBwCoibECWHRXt0iAALSGK+cF6JsqFoeh+iDlEa4UFQMwfNB3ywQgyyvhasJWIYiwbDYhimpYGhYdiApegSqpQdq17jK+3itiQ2ymIYQl1hoyw7IBEEjkKm7ZHkhRzlSTwNBxZbEXYr4gsYJBgrxxieCidEmExw7rtJIrZCSZIUlKFK0vSjIwQRnHET2AyGOsrbaIYIiWBYOgad4Wk2FsOgWiIwQosY3jGWuyZseOO4sCGYawBGhAqY5aiIIYtHaZ2j5UZR5gaAFQUhaFxhaNsn4xUmrFjluE67mAM4KWAGVEbqbjeP8myWFVRjbH+iHWq2ZW+BVVWWmYjESauOIAKL4BAHU6llvT1nogWoqJtjbToNgaXMALgiCfg2BdrbRXN2GLRw3AcEtK2tFqqldSRJXWmaJBaJ43lmEMYW6ABIRAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOgCUx0IBPAYgDkwB3AAgAUAnAewCsxMALgG0ADAF1EoAA5dYuAbi75JIAB6IATAGYAbCQDsATgCMO-ca36ArPp0iAHPoA0IaolN6NGnTat2tGgAsgcYAvqEuaFh4hKQAkvjyuOgANrgAXugKSiQAwtj8ANYscbCwAK5gLAAy6ABGYCm0ohJIIDJy2cpt6gga+hok9lojgSJWhvb2wVZaLm4IfvokGoaBq4GGJvY6OvbhkRg4BMQkCUmpGVmK+HkFmMWlFVW1DU1Cxq3SsklKKr3aYxWEhrWaGbyBHSQ3bzRD6ESGEHBERaYbmHTGQw6A4gKLHWJnRIKS6ZLokNjoDiwKpPSolfAAMy4HAwXVoECUYBIBAAblxCly8TFTudiWlSTdyZTqSUynSEkyWdclAheVxMMr8C0WioOr9uqBevp1iQfMYRBYRIFLJD7LDFtahloRNYLZt1pMcUKTvEiclxZq8hxKAIqgBZXApOACTnsznc-B8gUkb0E0X+q5k3LBrLhyPRzmqxPqzXa8S6n5df7uDSzEjGcz2ERu+HWuauRBWR3DF1WN1rVb7CK4o7C30XANZnOhliMVQCWXPOOEBNJwWjn2EieZyXZkNVOcL2lgIt8jVdMtfdqVm7VhANiYkK3WjTjaxdqH2rtaJ29-seodDmiTd0xJQNci4VBUDAfAFwAZXKKDKToDkVzVZNUxFP0wKzSDoNglgEKQjhqFPEsL3EHU2j1Ksek0LQgSRMEIShXYdC-XYSCsKwNGMbQzARBiwhxfAuAgOAVEwogK06W86IQABaQx7QUvRm2bXj+NsexzWxYcpPISgaBk-U73We1jHsRFzUMVF7CseyRH6YSgPxLDtwlP5qJvLzDUQLRlI7BBAi7EhAh0+xayBG0GK9Dc02wydd3uR45ReepGhM2i-IQRwv3MU0gjsHQsXNHYtDi4CEo8wMKSpGk0vpRVWTk75ZN8tREECAYQR0LQrGMSzXUMcwvxCIYrXMbiBgCa1Krc8cxR3HI91zFgIyjWAY0ILLWs6hBJkRXZtnMAJDG49igq7YwJu6oEbG0IIKv0+L3KWzzblWmdD0XSpdo63pjHdJ9xkxPxtAGqYxpups7umx65peqq3ozD68jwmD4MQjASP+g19tfC0wqBwbpnCix+mh26poe2aNHmscSAAUXwCA8bvWseqbfR+uukJwUCL8-CfWsdC8PYfH6QIGc3JmOG4DgWbZ7z2vx3pzKCnSSACVYtBCiZViCIdwiAA */
   context: ({ input }) => ({
     probotContext: input.probotContext,
     logger: input.logger,
@@ -95,6 +96,14 @@ const machineWithImpl = machineSetup.createMachine({
         'Create Next Issue': {
           invoke: {
             src: 'createNextIssueActor',
+            input: ({ context }) => ({ context }),
+            onDone: { actions: assign(({ event }) => ({ ...event.output })), target: 'Comment Summary' },
+            // onError: { target: '#errorEnd' },
+          },
+        },
+        'Comment Summary': {
+          invoke: {
+            src: 'commentSummaryActor',
             input: ({ context }) => ({ context }),
             onDone: { target: '#end' },
             // onError: { target: '#errorEnd' },

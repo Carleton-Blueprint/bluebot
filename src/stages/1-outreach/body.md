@@ -1,4 +1,4 @@
-# Stage 0: Outreach
+# Stage 1: Outreach
 
 ## Task
 

@@ -4,6 +4,7 @@ import { Logger } from 'winston';
 
 export type IssuesContext = Context<'issues'>;
 export type Milestone = RestEndpointMethodTypes['issues']['createMilestone']['response']['data'];
+export type Issue = RestEndpointMethodTypes['issues']['create']['response']['data'];
 export type MachineContext = {
   logger: Logger;
   probotContext: IssuesContext;
@@ -14,6 +15,7 @@ export type MachineContext = {
   clientTag: string;
   prevStage: number;
   milestone?: Milestone;
+  nextIssue?: Issue;
 };
 export type MachineEvent =
   | { type: 'New Project'; probotContext: IssuesContext }

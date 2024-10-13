@@ -41,14 +41,6 @@ const app = (probotApp: Probot) => {
     const actor = createActor(machine, { input: { probotContext: context, logger } });
     actor.start();
     actor.send({ type: 'New Project', probotContext: context });
-
-    // // add comment to original issue to highlight next steps
-    // await context.octokit.issues.createComment({
-    //   owner,
-    //   repo,
-    //   issue_number: receivedIssue.number,
-    //   body: 'hi',
-    // });
   });
   // For more information on building apps:
   // https://probot.github.io/docs/
