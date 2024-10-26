@@ -1,0 +1,52 @@
+# --- Site ---
+site_name: Bluebot Docs
+site_url: https://docs.bluebot.cublueprint.org
+repo_url: https://github.com/carleton-blueprint/bluebot
+
+# --- Navigation ---
+nav:
+  - Quick Start:
+      - 'quickstart/introduction.md'
+      - quickstart/installation.md
+      - Usage:
+          - 'quickstart/usage/projects.md'
+  - Developers:
+      - 'developers/guide.md'
+      - Tools:
+          - developers/tools.md
+
+# --- Extensions ---
+plugins:
+  - search
+  - table-reader
+  - social:
+      cards_layout_options:
+        background_color: '#0066db'
+markdown_extensions:
+  - admonition
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+# --- Styles ---
+theme:
+  name: material
+  logo: assets/images/logo_negative.png
+  favicon: assets/images/square_bluebg.png
+  features:
+    - navigation.tabs
+    - navigation.sections
+    # - navigation.path # currently insiders only feature
+  palette:
+    # scheme: slate
+    primary: custom
+extra_css:
+  - stylesheets/extra.css
+
+# --- Footer ---
+extra:
+  # generator: false
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/carleton-blueprint
+      name: Carleton Blueprint on GitHub
