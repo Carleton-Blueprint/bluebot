@@ -30,6 +30,27 @@ Looking forward to the possibility of working together and supporting your incre
 Warm regards,
 ```
 
+## Project Selection Criteria
+
+### Impact
+
+Projects are evaluated based on their potential impact on the community. Blueprint prefers projects that provide maximal benefit to their target community. This does not necessarily mean affecting the largest number of people; a project with significant benefits to a small group may be considered more impactful than one with minimal benefits to a larger group.
+
+### Necessity
+
+The project’s importance to the non-profit organization (NPO) and the NPO’s ability to complete the project independently are assessed. Blueprint prioritizes working with NPOs that genuinely need its help and lack the resources to seek alternative solutions.
+
+### Scope
+
+The size of the project must be appropriate for the timeline. Projects that are too large or too small may not meet Blueprint’s standards or may not be necessary. The VP of Projects works with NPOs during the proposal process to determine an appropriately sized project. 
+
+### Technical Fit
+Projects must effectively leverage Blueprint’s technological skills. Blueprint seeks projects that are neither too trivial nor too difficult, ensuring the partnership is mutually beneficial.
+
+### Credibility
+Evidence of the project’s potential for implementation is required. NPOs must provide data or history demonstrating the project’s usefulness. Blueprint aims to avoid developing projects that will not be utilized.
+
+
 ## Preflight Checklist
 
 - [ ] I have read and re-read the generated email template. There are no errors.

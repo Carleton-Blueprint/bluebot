@@ -13,7 +13,8 @@ nav:
   - Developers:
       - 'developers/guide.md'
       - Tools:
-          - developers/tools.md
+          - 'developers/tools/docs.md'
+          - 'developers/tools/cicd.md'
 
 # --- Extensions ---
 plugins:
@@ -25,6 +26,8 @@ plugins:
 markdown_extensions:
   - admonition
   - pymdownx.superfences
+  - def_list
+  - attr_list
   - pymdownx.tabbed:
       alternate_style: true
 

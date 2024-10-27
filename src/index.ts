@@ -42,6 +42,13 @@ const app = (probotApp: Probot) => {
     actor.start();
     actor.send({ type: 'New Project', probotContext: context });
   });
+
+  probotApp.on('issues.closed', async context => {
+    const actor = createActor(machine, { input: { probotContext: context, logger } });
+    actor.start();
+    actor.send({ type: 'Issue Closed', probotContext: context });
+  });
+
   // For more information on building apps:
   // https://probot.github.io/docs/
 

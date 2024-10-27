@@ -19,4 +19,5 @@ export type MachineContext = {
 };
 export type MachineEvent =
   | { type: 'New Project'; probotContext: IssuesContext }
+  | { type: 'Issue Closed'; probotContext: IssuesContext }
   | { type: 'Milestone Created'; milestone: Milestone }; // not used: deleteme (left here for reference example )

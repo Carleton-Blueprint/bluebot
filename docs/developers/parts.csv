@@ -1,0 +1,5 @@
+Technology,Purpose,Documentation
+XState,Finite State Machine (FSM) library. You can think of XState as the "glue" that connects all the other parts of **Bluebot**.,[https://stately.ai/docs/quick-start](https://stately.ai/docs/quick-start)
+Probot,"Framework for building [GitHub Apps](https://docs.github.com/en/apps/creating-github-apps/about-creating-github-apps/about-creating-github-apps). Think of Probot as a NodeJS wrapper around Octokit that provides simpler Webhooks and config utilities.",[https://probot.github.io/docs/](https://probot.github.io/docs/)
+Octokit,"Official wrapper around the GitHub REST API. You likely won't import from Octokit directly *(except for type definitions)*, as Probot will provide Octokit instances via context.",[https://octokit.github.io/rest.js/v21/](https://octokit.github.io/rest.js/v21/)
+GitHub REST API,"Make queries and actions against the GitHub API. Again, likely won't use this library directly, but the API reference is still good to use.",[https://docs.github.com/en/rest](https://docs.github.com/en/rest)
