@@ -24,6 +24,8 @@ plugins:
       cards_layout_options:
         background_color: '#0066db'
 markdown_extensions:
+  - toc:
+      permalink: true
   - admonition
   - pymdownx.superfences
   - def_list
@@ -38,6 +40,7 @@ theme:
   favicon: assets/images/square_bluebg.png
   features:
     - navigation.tabs
+    - navigation.top
     - navigation.sections
     # - navigation.path # currently insiders only feature
   palette:

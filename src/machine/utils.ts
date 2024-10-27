@@ -1,6 +1,15 @@
 import fs from 'fs/promises';
 import { MD_DIR, PROJECT_URL } from '../constants';
 
+export const generateMetadata = (metadata: Record<string, string>) => {
+  const payload = `## Metadata
+\`\`\`json
+${JSON.stringify(metadata, null, 2)}
+\`\`\`
+`;
+  return payload;
+};
+
 export const getDirs = async () => {
   /* returns: {0 : '0-initialization', 1: '1-outreach'} */
 

@@ -13,3 +13,5 @@
 `config.json`
 
 :   Something else again
+
+- Metadata section in issue body

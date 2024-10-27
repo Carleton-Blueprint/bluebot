@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import _ from 'lodash';
 import { MachineContext } from './types';
 import { MAX_STAGE } from '../constants';
-import { getDirs, getProjectUrl } from './utils';
+import { generateMetadata, getDirs, getProjectUrl } from './utils';
 
 export const parseGeneralInfoActor = fromPromise(
   async ({ input: { context } }: { input: { context: MachineContext } }) => {
@@ -81,7 +81,7 @@ export const createNextIssueActor = fromPromise(
       owner,
       repo,
       title: `[project] ${clientTag}: Stage ${prevStage + 1}/${MAX_STAGE} - ${label}`,
-      body: template(data),
+      body: template(data) + generateMetadata({ client, author, clientTag }),
       milestone: milestone.number,
     });
     const nextIssue = nextIssueResponse.data;

@@ -5,3 +5,5 @@ export const MAX_STAGE = 5;
 export const PROJECT_URL =
   'https://github.com/orgs/Carleton-Blueprint/projects/14/views/1?sliceBy%5BcolumnId%5D=Milestone';
 export const MD_DIR = './src/stages';
+
+export const METADATA_REGEX = /## Metadata\s+```json\n([\s\S]*?)\n```/;
