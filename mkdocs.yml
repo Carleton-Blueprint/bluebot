@@ -12,6 +12,9 @@ nav:
           - 'quickstart/usage/projects.md'
   - Developers:
       - 'developers/guide.md'
+      - Tech Stack:
+          - 'developers/stack/xstate.md'
+      - 'developers/xstate.md'
       - Tools:
           - 'developers/tools/docs.md'
           - 'developers/tools/cicd.md'
