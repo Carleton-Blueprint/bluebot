@@ -2,10 +2,11 @@ import fs from 'fs/promises';
 import fg from 'fast-glob';
 import _ from 'lodash';
 
-import { Issue, IssuesContext, Logger } from './types';
+import { Comment, Issue, IssuesContext, Logger } from './types';
 import { extractMetadata, generateMetadata, getContextProps, getProjectUrl } from './utils';
 import { MAX_STAGE, MD_DIR } from '../constants';
 
+// create the next issue. persist the milestone and metadata from the previous issue, but incrementing "stage"
 export const createNextIssue = async (context: IssuesContext, logger: Logger): Promise<Issue | null> => {
   const { owner, repo, issue } = await getContextProps(context);
   const metadata = extractMetadata(issue);
@@ -53,31 +54,36 @@ export const createNextIssue = async (context: IssuesContext, logger: Logger): P
   return nextIssue;
 };
 
-export const commentSummary = async (context: IssuesContext, logger: Logger, nextIssue: Issue) => {
+// add a comment to the original issue with a summary of the project and next steps
+export const commentSummary = async (
+  context: IssuesContext,
+  logger: Logger,
+  nextIssue: Issue,
+): Promise<Comment | null> => {
   const { owner, repo, issue } = await getContextProps(context);
   const metadata = extractMetadata(issue);
   const milestone = issue.milestone;
 
   if (!metadata) {
     logger.error('commentSummary: Metadata not found.');
-    return;
+    return null;
   }
 
   if (!milestone) {
     logger.error('commentSummary: Milestone is not set.');
-    return;
+    return null;
   }
 
   if (!nextIssue) {
     logger.error('commentSummary: Next Issue is not set.');
-    return;
+    return null;
   }
 
   const filePaths = await fg(`${MD_DIR}/${metadata.stage}-*/summary.md`);
 
   if (filePaths.length === 0) {
     logger.error(`commentSummary: No summary markdown file found for milestone ${milestone.title}.`);
-    return;
+    return null;
   }
 
   if (filePaths.length > 1) {
@@ -94,7 +100,6 @@ export const commentSummary = async (context: IssuesContext, logger: Logger, nex
     projectUrl: getProjectUrl(milestone.title),
   };
 
-  // add comment to original issue to highlight next steps
   const commentResponse = await context.octokit.issues.createComment({
     owner,
     repo,
