@@ -1,4 +1,4 @@
-# Stage 1: Project Alignment and Requirements
+# Stage 2: Project Alignment and Requirements
 
 ## Checklist
 

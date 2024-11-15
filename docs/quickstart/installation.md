@@ -12,4 +12,8 @@ Add this important resource for devs
 ![k](image-1.png)
 
 
-SET LABEL ID CONSTANT
+SET LABEL ID and project url CONSTANT
+
+instructions to set project auto add, and instructions to set label auto add
+
+add template reference

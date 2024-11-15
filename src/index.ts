@@ -1,7 +1,9 @@
 import { Probot, run } from 'probot';
 import winston from 'winston';
 
-import { appendInitialMetadata, createMilestone, createNextIssue, isLabelCorrect } from './machine/utils';
+import { isLabelCorrect } from './lib/utils';
+import { appendInitialMetadata, createMilestone } from './lib/issue_opened';
+import { createNextIssue, commentSummary } from './lib/issue_closed';
 
 /* Logger Configuration */
 const logger = winston.createLogger({
@@ -52,7 +54,14 @@ const app = (probotApp: Probot) => {
     if (!isLabelCorrect(context, logger)) return;
 
     // Create next issue
-    await createNextIssue(context, logger);
+    const nextIssue = await createNextIssue(context, logger);
+    if (!nextIssue) {
+      logger.error('createNextIssue: Next Issue is not set.');
+      return;
+    }
+
+    // Comment Summary
+    await commentSummary(context, logger, nextIssue);
   });
 };
 
