@@ -1,8 +1,7 @@
 import { Probot, run } from 'probot';
 import winston from 'winston';
 
-import { createActor } from 'xstate';
-import machine from './machine';
+import { appendInitialMetadata, createMilestone, createNextIssue, isLabelCorrect } from './machine/utils';
 
 /* Logger Configuration */
 const logger = winston.createLogger({
@@ -38,22 +37,23 @@ if (process.env.NODE_ENV !== 'production') {
 /* Main App */
 const app = (probotApp: Probot) => {
   probotApp.on('issues.opened', async context => {
-    const actor = createActor(machine, { input: { probotContext: context, logger } });
-    actor.start();
-    actor.send({ type: 'New Project', probotContext: context });
+    // Activation Label Guard
+    if (!isLabelCorrect(context, logger)) return;
+
+    // Add Initial Metadata to Issue Body
+    await appendInitialMetadata(context, logger);
+
+    // Create Milestone
+    await createMilestone(context, logger);
   });
 
   probotApp.on('issues.closed', async context => {
-    const actor = createActor(machine, { input: { probotContext: context, logger } });
-    actor.start();
-    actor.send({ type: 'Issue Closed', probotContext: context });
+    // Activation Label Guard
+    if (!isLabelCorrect(context, logger)) return;
+
+    // Create next issue
+    await createNextIssue(context, logger);
   });
-
-  // For more information on building apps:
-  // https://probot.github.io/docs/
-
-  // To get your app running against GitHub, see:
-  // https://probot.github.io/docs/development/
 };
 
 run(app);

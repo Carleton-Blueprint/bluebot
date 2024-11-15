@@ -1,23 +1,14 @@
 import { Context } from 'probot';
 import { RestEndpointMethodTypes } from '@octokit/plugin-rest-endpoint-methods';
-import { Logger } from 'winston';
+import { Logger as WinstonLogger } from 'winston';
 
 export type IssuesContext = Context<'issues'>;
 export type Milestone = RestEndpointMethodTypes['issues']['createMilestone']['response']['data'];
 export type Issue = RestEndpointMethodTypes['issues']['create']['response']['data'];
-export type MachineContext = {
-  logger: Logger;
-  probotContext: IssuesContext;
-  owner: string;
-  repo: string;
+export type Logger = WinstonLogger;
+export type IssueMetadata = {
   client: string;
-  author: string;
   clientTag: string;
-  prevStage: number;
-  milestone?: Milestone;
-  nextIssue?: Issue;
+  author: string;
+  stage: number;
 };
-export type MachineEvent =
-  | { type: 'New Project'; probotContext: IssuesContext }
-  | { type: 'Issue Closed'; probotContext: IssuesContext }
-  | { type: 'Milestone Created'; milestone: Milestone }; // not used: deleteme (left here for reference example )
