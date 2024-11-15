@@ -37,7 +37,7 @@ export const createNextIssue = async (context: IssuesContext, logger: Logger): P
   }
 
   const { client, author, clientTag } = metadata;
-  const data = { client, author, clientTag };
+  const data = { client, author, clientTag, stage };
 
   // add comment to original issue to highlight next steps
   const nextIssueResponse = await context.octokit.issues.create({
@@ -95,8 +95,11 @@ export const commentSummary = async (
   const rawTemplate = await fs.readFile(filePaths[0], 'utf8');
   const template = _.template(rawTemplate);
   const data = {
+    client: metadata.client,
+    clientTag: metadata.clientTag,
+    stage: metadata.stage,
     milestoneUrl: milestone.html_url,
-    issueUrl: nextIssue.html_url,
+    nextIssueUrl: nextIssue.html_url,
     projectUrl: getProjectUrl(milestone.title),
   };
 

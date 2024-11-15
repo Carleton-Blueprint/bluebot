@@ -1,4 +1,4 @@
-# Stage 1: Outreach
+# Stage <%= stage %>: Outreach
 
 ## Task
 

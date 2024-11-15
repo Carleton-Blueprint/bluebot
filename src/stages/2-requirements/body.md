@@ -1,4 +1,4 @@
-# Stage 2: Project Alignment and Requirements
+# Stage <%= stage %>: Project Alignment and Requirements
 
 ## Checklist
 
