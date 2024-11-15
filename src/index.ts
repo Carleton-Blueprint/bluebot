@@ -1,8 +1,10 @@
 import { Probot, run } from 'probot';
 import winston from 'winston';
 
-import { createActor } from 'xstate';
-import machine from './machine';
+import { extractMetadata, isLabelCorrect } from './lib/utils';
+import { appendInitialMetadata, createMilestone } from './lib/issue_opened';
+import { createNextIssue, commentSummary } from './lib/issue_closed';
+import { Issue } from './lib/types';
 
 /* Logger Configuration */
 const logger = winston.createLogger({
@@ -38,22 +40,34 @@ if (process.env.NODE_ENV !== 'production') {
 /* Main App */
 const app = (probotApp: Probot) => {
   probotApp.on('issues.opened', async context => {
-    const actor = createActor(machine, { input: { probotContext: context, logger } });
-    actor.start();
-    actor.send({ type: 'New Project', probotContext: context });
+    // Activation Label Guard
+    if (!isLabelCorrect(context, logger)) return;
+
+    // Issue is initial user creation guard
+    const metadata = extractMetadata(context.payload.issue as Issue);
+    if (metadata != null) return; // this issue was auto-created by bluebot
+
+    // Add Initial Metadata to Issue Body
+    await appendInitialMetadata(context, logger);
+
+    // Create Milestone
+    await createMilestone(context, logger);
   });
 
   probotApp.on('issues.closed', async context => {
-    const actor = createActor(machine, { input: { probotContext: context, logger } });
-    actor.start();
-    actor.send({ type: 'Issue Closed', probotContext: context });
+    // Activation Label Guard
+    if (!isLabelCorrect(context, logger)) return;
+
+    // Create next issue
+    const nextIssue = await createNextIssue(context, logger);
+    if (!nextIssue) {
+      logger.error('createNextIssue: Next Issue is not set.');
+      return;
+    }
+
+    // Comment Summary
+    await commentSummary(context, logger, nextIssue);
   });
-
-  // For more information on building apps:
-  // https://probot.github.io/docs/
-
-  // To get your app running against GitHub, see:
-  // https://probot.github.io/docs/development/
 };
 
 run(app);

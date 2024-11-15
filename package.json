@@ -30,9 +30,9 @@
     "typescript": "^5.6.3"
   },
   "dependencies": {
+    "fast-glob": "^3.3.2",
     "lodash": "^4.17.21",
     "probot": "^13.3.8",
-    "winston": "^3.15.0",
-    "xstate": "^5.18.2"
+    "winston": "^3.15.0"
   }
 }
