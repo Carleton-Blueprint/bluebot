@@ -9,3 +9,13 @@ Hip hip hooray 🥳🥂! **Your project is now underway.**
   This issue contains the next steps to be taken from here! Close this issue once completed to move on to the next step.
 
 - Track your overall progress from [this project board](<%= projectUrl %>).
+
+---
+
+**Quick Access**
+
+| Resources                                     |
+|----------------------------------------------|
+| [📍 Project Milestone](<%= milestoneUrl %>)   |
+| [💼 Project Tracker Board](<%= projectUrl %>) |
+| [**⭐ Next Steps**](<%= nextIssueUrl %>)           |

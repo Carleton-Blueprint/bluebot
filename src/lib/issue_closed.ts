@@ -1,12 +1,12 @@
 import fs from 'fs/promises';
 import fg from 'fast-glob';
-import _ from 'lodash';
+import _, { assign } from 'lodash';
 
 import { Comment, Issue, IssuesContext, Logger } from './types';
 import { extractMetadata, generateMetadata, getContextProps, getProjectUrl } from './utils';
 import { MAX_STAGE, MD_DIR } from '../constants';
 
-// create the next issue. persist the milestone and metadata from the previous issue, but incrementing "stage"
+// create the next issue. persist the milestone, metadata, and labels from the previous issue, but incrementing "stage"
 export const createNextIssue = async (context: IssuesContext, logger: Logger): Promise<Issue | null> => {
   const { owner, repo, issue } = await getContextProps(context);
   const metadata = extractMetadata(issue);
@@ -46,6 +46,8 @@ export const createNextIssue = async (context: IssuesContext, logger: Logger): P
     title: `[project] ${clientTag}: Stage ${stage}/${MAX_STAGE} - REPLACE WITH LABEL`,
     body: template(data) + generateMetadata({ client, author, clientTag, stage }),
     milestone: issue.milestone.number,
+    labels: issue.labels,
+    assignees: issue.assignees?.map(assignee => assignee.login),
   });
 
   const nextIssue = nextIssueResponse.data;

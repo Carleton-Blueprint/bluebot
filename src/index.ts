@@ -1,9 +1,10 @@
 import { Probot, run } from 'probot';
 import winston from 'winston';
 
-import { isLabelCorrect } from './lib/utils';
+import { extractMetadata, isLabelCorrect } from './lib/utils';
 import { appendInitialMetadata, createMilestone } from './lib/issue_opened';
 import { createNextIssue, commentSummary } from './lib/issue_closed';
+import { Issue } from './lib/types';
 
 /* Logger Configuration */
 const logger = winston.createLogger({
@@ -41,6 +42,10 @@ const app = (probotApp: Probot) => {
   probotApp.on('issues.opened', async context => {
     // Activation Label Guard
     if (!isLabelCorrect(context, logger)) return;
+
+    // Issue is initial user creation guard
+    const metadata = extractMetadata(context.payload.issue as Issue);
+    if (metadata != null) return; // this issue was auto-created by bluebot
 
     // Add Initial Metadata to Issue Body
     await appendInitialMetadata(context, logger);
