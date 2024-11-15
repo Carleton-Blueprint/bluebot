@@ -45,3 +45,8 @@ To get started, here are the different technologies that are used extensively in
 - Prettier and ESLint checks
 
 - src directory structure
+
+
+
+
+ROADMAP: Graphical guided install: ACTIVATION_LABEL and PROJECT_URL

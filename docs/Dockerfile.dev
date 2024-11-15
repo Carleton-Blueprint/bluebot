@@ -1,0 +1,13 @@
+FROM squidfunk/mkdocs-material
+
+# ARG DOCS_PASSWORD=changeme
+# ENV DOCS_PASSWORD=${DOCS_PASSWORD}
+
+RUN pip install \
+        mkdocs-table-reader-plugin \
+        mkdocs-encryptcontent-plugin
+
+WORKDIR /opt/mkdocs
+
+ENTRYPOINT [ "mkdocs" ]
+CMD [ "serve", "-a", "0.0.0.0:8000" ]
