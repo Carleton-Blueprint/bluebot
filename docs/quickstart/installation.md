@@ -37,21 +37,20 @@ In order for you to start using Bluebot, you will need to install it on your rep
 
 ## 4. Configuring Bluebot
 
-At this time, Bluebot does not yet have a guided configuration process. You will need to go into the `./src/constants.ts` file and set the `LABEL_ID` and `PROJECT_URL` constants.
+At this time, Bluebot does not yet have a guided configuration process. You will need to go into the `./src/constants.ts` file and set the `ACTIVATION_LABEL` and `PROJECT_URL` constants.
 
 ```typescript
-export const ACTIVATION_LABEL_ID = 7750572746;
+export const ACTIVATION_LABEL = 'charlie-activation';
 export const PROJECT_URL = 'https://github.com/orgs/Carleton-Blueprint/projects/14/views/1?sliceBy%5BcolumnId%5D=Milestone';
 ```
 
-`ACTIVATION_LABEL_ID`
+`ACTIVATION_LABEL`
 
-:   - In order to not respond to every single issue event, `ACTIVATION_LABEL_ID` is used to filter events and trigger Bluebot's workflow only on issues with this label.
-    - Find the label ID of your target label by using the [GitHub Debug Panel](#verifying).
-    - You can configure your "New Issue" template to **automatically add this label to new issues**. See [^^this example^^](https://github.com/Carleton-Blueprint/.github/blob/main/.github/ISSUE_TEMPLATE/3-new-project.yml?plain=1). *Make sure to create a repository-level override instead of putting this in the global `.github` repository.*
-    
+- To ensure Bluebot only responds to relevant issue events, `ACTIVATION_LABEL` is used to filter issues by their label name and trigger Bluebot's workflow. 
+    - Set this constant to the **exact name** of the label you want to use for activation.
+    - You can configure your "New Issue" template to **automatically add this label to new issues**. See [this example](https://github.com/Carleton-Blueprint/.github/blob/main/.github/ISSUE_TEMPLATE/3-new-project.yml?plain=1). *Make sure to create a repository-level override instead of putting this in the global `.github` repository.*
 
 `PROJECT_URL`
 
-:   - This is the URL of the project board that Bluebot will be interacting with. ^^Bluebot **does not** interact with this project board directly^^ (GitHub's current API does not yet support project interactions), but it uses this URL to generate links to the project board in the comments it makes on issues.
+- This is the URL of the project board that Bluebot will be interacting with. Bluebot **does not** interact with this project board directly (GitHub's current API does not yet support project interactions), but it uses this URL to generate links to the project board in the comments it makes on issues.
     - You can configure a [GitHub automation](https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/adding-items-automatically) to automatically add your new issues to this project.
