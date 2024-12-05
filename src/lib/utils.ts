@@ -1,4 +1,5 @@
-import { ACTIVATION_LABEL_ID, METADATA_REGEX, PROJECT_URL } from '../constants';
+// import { ACTIVATION_LABEL_ID, METADATA_REGEX, PROJECT_URL } from '../constants';
+import { ACTIVATION_LABEL, METADATA_REGEX, PROJECT_URL } from '../constants';
 import { Logger, IssuesContext, IssueMetadata, Issue } from './types';
 
 // Given a metadata object, generate a markdown string to be appended to the body of an issue.
@@ -20,7 +21,10 @@ export const getProjectUrl = (milestoneTitle: string) => {
 // Check if the issue has the correct label. Requires `ACTIVATION_LABEL_ID` to be set in constants.ts.
 export const isLabelCorrect = (context: IssuesContext, logger: Logger) => {
   const receivedIssue = context.payload.issue;
-  const isLabelCorrect = receivedIssue.labels?.some(label => label.id === ACTIVATION_LABEL_ID) ?? false;
+  
+  // const isLabelCorrect = receivedIssue.labels?.some(label => label.name === ACTIVATION_LABEL_ID) ?? false;
+  //use ACTIVATION_LABEL to match label.name
+  const isLabelCorrect = receivedIssue.labels?.some(label => label.name === ACTIVATION_LABEL) ?? false;   
 
   logger.info(
     `Checking issue label of '${receivedIssue.title}'... ${
