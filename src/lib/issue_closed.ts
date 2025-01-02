@@ -17,6 +17,10 @@ export const createNextIssue = async (context: IssuesContext, logger: Logger): P
   }
 
   const stage = metadata.stage + 1;
+  if (stage > MAX_STAGE) {
+    logger.error('createNextIssue: Stage is already at maximum.');
+    return null;
+  }
   const filePaths = await fg(`${MD_DIR}/${stage}-*/body.md`);
 
   if (filePaths.length === 0) {
@@ -60,7 +64,7 @@ export const createNextIssue = async (context: IssuesContext, logger: Logger): P
 export const commentSummary = async (
   context: IssuesContext,
   logger: Logger,
-  nextIssue: Issue,
+  nextIssue: Issue
 ): Promise<Comment | null> => {
   const { owner, repo, issue } = await getContextProps(context);
   const metadata = extractMetadata(issue);
