@@ -6,7 +6,6 @@ import { appendInitialMetadata, createMilestone } from './lib/issue_opened';
 import { createNextIssue, commentSummary } from './lib/issue_closed';
 import { Issue } from './lib/types';
 
-
 /* Logger Configuration */
 const logger = winston.createLogger({
   level: 'debug',
@@ -62,9 +61,10 @@ const app = (probotApp: Probot) => {
     // Create next issue
     const nextIssue = await createNextIssue(context, logger);
     if (!nextIssue) {
-      logger.error('createNextIssue: Next Issue is not set or the maximium issue has been reached');
+      logger.error('createNextIssue: Next Issue is not set.');
       return;
     }
+
     // Comment Summary
     await commentSummary(context, logger, nextIssue);
   });
