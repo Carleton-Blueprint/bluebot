@@ -17,6 +17,10 @@ export const createNextIssue = async (context: IssuesContext, logger: Logger): P
   }
 
   const stage = metadata.stage + 1;
+  if (stage > MAX_STAGE) {
+    logger.error('createNextIssue: Stage is already at maximum.');
+    return null;
+  }
   const filePaths = await fg(`${MD_DIR}/${stage}-*/body.md`);
 
   if (filePaths.length === 0) {
@@ -39,11 +43,21 @@ export const createNextIssue = async (context: IssuesContext, logger: Logger): P
   const { client, author, clientTag } = metadata;
   const data = { client, author, clientTag, stage };
 
+  const configFiles = await fg(`${MD_DIR}/${stage}-*/config.json`)
+  if (configFiles.length === 0) {
+    logger.error(`createNextIssue: No config.json file found for stage: ${stage}.`)
+    return null;
+  }
+
+  const configFile = await fs.readFile(configFiles[0], 'utf-8')
+  const config = JSON.parse(configFile)
+  const stageLabel = config.label
+
   // add comment to original issue to highlight next steps
   const nextIssueResponse = await context.octokit.issues.create({
     owner,
     repo,
-    title: `[project] ${clientTag}: Stage ${stage}/${MAX_STAGE} - REPLACE WITH LABEL`,
+    title: `[project] ${clientTag}: Stage ${stage}/${MAX_STAGE} - ${stageLabel}`,
     body: template(data) + generateMetadata({ client, author, clientTag, stage }),
     milestone: issue.milestone.number,
     labels: issue.labels,
@@ -60,7 +74,7 @@ export const createNextIssue = async (context: IssuesContext, logger: Logger): P
 export const commentSummary = async (
   context: IssuesContext,
   logger: Logger,
-  nextIssue: Issue,
+  nextIssue: Issue
 ): Promise<Comment | null> => {
   const { owner, repo, issue } = await getContextProps(context);
   const metadata = extractMetadata(issue);
