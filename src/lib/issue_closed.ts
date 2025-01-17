@@ -43,11 +43,20 @@ export const createNextIssue = async (context: IssuesContext, logger: Logger): P
   const { client, author, clientTag } = metadata;
   const data = { client, author, clientTag, stage };
 
+  const configFiles = await fg(`${MD_DIR}/${stage}-*/config.json`)
+  if (configFiles.length === 0) {
+    logger.error(`createNextIssue: No config.json file found for stage: ${stage}.`)
+  }
+
+  const configFile = await fs.readFile(configFiles[0], 'utf-8')
+  const config = JSON.parse(configFile)
+  const stageLabel = config.label
+
   // add comment to original issue to highlight next steps
   const nextIssueResponse = await context.octokit.issues.create({
     owner,
     repo,
-    title: `[project] ${clientTag}: Stage ${stage}/${MAX_STAGE} - REPLACE WITH LABEL`,
+    title: `[project] ${clientTag}: Stage ${stage}/${MAX_STAGE} - ${stageLabel}`,
     body: template(data) + generateMetadata({ client, author, clientTag, stage }),
     milestone: issue.milestone.number,
     labels: issue.labels,
