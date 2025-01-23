@@ -15,6 +15,6 @@ Now that you have sent out the initial outreach email to <%= client %>, we are r
 |----------------------------------------------|
 | [📍 Project Milestone](<%= milestoneUrl %>)   |
 | [💼 Project Tracker Board](<%= projectUrl %>) |
-| [**⭐ Next Steps**](<%= nextIssueUrl %>)           |
+| [**⭐ Next Step**](<%= nextIssueUrl %>)           |
 
 ### <%= nextIssueUrl %>
