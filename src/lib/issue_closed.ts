@@ -74,7 +74,7 @@ export const createNextIssue = async (context: IssuesContext, logger: Logger): P
 export const commentSummary = async (
   context: IssuesContext,
   logger: Logger,
-  nextIssue: Issue,
+  nextIssue: Issue
 ): Promise<Comment | null> => {
   const { owner, repo, issue } = await getContextProps(context);
   const metadata = extractMetadata(issue);

@@ -1,3 +1,5 @@
+*.private-key.pem
+
 # mkdocs site
 site
 
