@@ -18,4 +18,4 @@ Hip hip hooray 🥳🥂! **Your project is now underway.**
 |----------------------------------------------|
 | [📍 Project Milestone](<%= milestoneUrl %>)   |
 | [💼 Project Tracker Board](<%= projectUrl %>) |
-| [**⭐ Next Steps**](<%= nextIssueUrl %>)           |
+| [**⭐ Next Step**](<%= nextIssueUrl %>)           |

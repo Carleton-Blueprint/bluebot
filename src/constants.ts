@@ -1,5 +1,5 @@
 // export const ACTIVATION_LABEL_ID = 7711881973;
-export const ACTIVATION_LABEL = 'charlie-activation';
+export const ACTIVATION_LABEL = 'james-activation';
 export const MAX_STAGE = 5;
 
 // Note: expect auto-add to have been set up already: https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/adding-items-automatically

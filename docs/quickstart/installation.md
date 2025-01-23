@@ -20,6 +20,8 @@ At this time, Bluebot only requires permissions to **read and write to issues**.
 
 ![permissions_snapshot](./permissions.png)
 
+![subscribe_snapshot](./subscribe.png)
+
 ### Verifying and Debugging {#verifying}
 
 There is a very helpful GitHub panel that you can use to verify that the events you are interested in is indeed getting sent to the webhook server your app is configured to use. This panel is located in your GitHub User Settings / Developer Settings / GitHub Apps / → Click "Edit" on the App → Advanced.
