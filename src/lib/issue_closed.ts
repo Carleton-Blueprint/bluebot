@@ -46,6 +46,7 @@ export const createNextIssue = async (context: IssuesContext, logger: Logger): P
   const configFiles = await fg(`${MD_DIR}/${stage}-*/config.json`)
   if (configFiles.length === 0) {
     logger.error(`createNextIssue: No config.json file found for stage: ${stage}.`)
+    return null;
   }
 
   const configFile = await fs.readFile(configFiles[0], 'utf-8')
