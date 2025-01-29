@@ -2,9 +2,9 @@
 
 ## Quick Recap
 
-Now that the initial email has been fired off, it’s time to get a better understanding of the project requirements. This stage is all about ensuring that the NPO’s goals and technical needs align with our mission and vision. If they do, we request detailed project requirements documentation from the NPO.
+Now that we have received the project requirements documentation, it's time to move on to the next stage. This stage is all about creating the necessary contracts and licensing agreements to ensure that both parties are protected and that the project can be completed successfully.
 
-### Todo: Email template for "Project Requirements Documentation Request"
+### Todo: Email template for "Contract Signing Request and License Agreement Confirmation"
 
 ```markdown
 replaceme
@@ -12,15 +12,13 @@ replaceme
 
 ### Templates
 
-- [🪪 GitHub Licensing Procedures](https://docs.google.com/document/d/1pqLH0193GtxnVoaFPzdesT2mTBC-Rxr6RJWyd5EghpU/edit?tab=t.0)
 - [⭐️ Blueprint Project Partnership Contract](https://docs.google.com/document/d/14d67_QmLFORN9T2yLOSH5ZaTAEyzcgscTMfd9QzQUnM/edit?tab=t.0#heading=h.1ms2cdwew5ho)
+- [🪪 GitHub Licensing Procedures](https://docs.google.com/document/d/1pqLH0193GtxnVoaFPzdesT2mTBC-Rxr6RJWyd5EghpU/edit?tab=t.0)
 
 
 ## Checklist
 
-- [ ] begin creating recruitment posters
-
-- [ ] NPO’s goals and technical needs align with our [mission and vision](https://cublueprint.org)
-- [ ] Request and receive detailed project requirements documentation
-- [ ] Link any meeting minutes or specifications/mockups/diagrams provided by the NPO in a comment to this issue
-- [ ] *(optional)* Document reason for **Case: No Show, No Go** in the comments if applicable before terminating this project flow
+- [ ] *(async)* VP Talent to begin creating **role descriptions** and **application forms**
+- [ ] *(async)* VP Marketing to begin creating **recruitment posters** 
+- [ ] NPO confirms open source license is acceptable: MIT / GNU General Public License v3.0
+- [ ] Contract is finalized and signed by both parties
